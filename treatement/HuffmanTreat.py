@@ -14,21 +14,25 @@ class HuffmanNode:
 
 
 class Huffman:
-    def __init__(self, file_path):
+    def __init__(self, file_path=None):
         self.file_path = file_path
-        self.frequencies = defaultdict(int)
+        self.frequencies = defaultdict(int)  # Changé ici pour utiliser defaultdict
         self.codes = {}
+        self.reverse_codes = {}
         self.heap = []
-        self._build_frequencies()
-        self._build_heap()
-        self._build_tree()
-        self._generate_codes()
+
+        if file_path:
+            self._build_frequencies()
+            self._build_heap()
+            self._build_tree()
+            self._generate_codes()
+            self._build_reverse_codes()
 
     def _build_frequencies(self):
         with open(self.file_path, 'r', encoding='utf-8') as file:
             text = file.read()
             for char in text:
-                self.frequencies[char] += 1
+                self.frequencies[char] += 1  # Ne générera plus d'erreur KeyError
 
     def _build_heap(self):
         for char, freq in self.frequencies.items():
@@ -67,8 +71,49 @@ class Huffman:
     def get_binary_dict(self):
         return self.codes
 
+    def _build_reverse_codes(self):
+        self.reverse_codes = {v: k for k, v in self.codes.items()}
 
-# Exemple d'utilisation
+    def decode_bits(self, bit_string):
+        if not hasattr(self, 'reverse_codes'):
+            raise ValueError("Le dictionnaire Huffman n'a pas été initialisé")
+
+        current_code = ""
+        decoded_text = []
+
+        for bit in bit_string:
+            current_code += bit
+            if current_code in self.reverse_codes:
+                decoded_text.append(self.reverse_codes[current_code])
+                current_code = ""
+
+        if current_code:
+            raise ValueError("Bits résiduels non décodables trouvés")
+
+        return ''.join(decoded_text)
+
+    def decode_bytes(self, byte_data):
+        bit_string = ''.join(format(byte, '08b') for byte in byte_data)
+        return self.decode_bits(bit_string)
+
+    @staticmethod
+    def decode_with_dict(bit_string, huffman_dict):
+        reverse_dict = {v: k for k, v in huffman_dict.items()}
+        current_code = ""
+        decoded_text = []
+
+        for bit in bit_string:
+            current_code += bit
+            if current_code in reverse_dict:
+                decoded_text.append(reverse_dict[current_code])
+                current_code = ""
+
+        if current_code:
+            raise ValueError("Bits résiduels non décodables trouvés")
+
+        return ''.join(decoded_text)
+
+
 if __name__ == "__main__":
     huffman = Huffman("../test/text.txt")
     binary_dict = huffman.get_binary_dict()
