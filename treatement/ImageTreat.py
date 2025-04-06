@@ -165,12 +165,12 @@ class ImageSteganography:
         new_image.save(output_path)
 
 
-if __name__ == "__main__":
-    # Exemple de cache
-    stego = ImageSteganography("../test/hide.png")
-    stego.hide_binary_file("../test/bits.txt", "../test/hideImage.png")
-
-    # Exemple de récupération
-    stego = ImageSteganography("../test/hideImage.png")
-    recovered_bits = stego.retrieve_binary_file("../test/recupered.txt")
-    print("Bits récupérés:", recovered_bits)
+# if __name__ == "__main__":
+#     # Exemple de cache
+#     stego = ImageSteganography("../test/hide.png")
+#     stego.hide_binary_file("../test/bits.txt", "../test/hideImage.png")
+#
+#     # Exemple de récupération
+#     stego = ImageSteganography("../test/hideImage.png")
+#     recovered_bits = stego.retrieve_binary_file("../test/recupered.txt")
+#     print("Bits récupérés:", recovered_bits)

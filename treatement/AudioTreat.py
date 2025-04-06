@@ -156,12 +156,12 @@ class AudioSteganography:
         wave_write.close()
 
 
-if __name__ == "__main__":
-    # Exemple de cache
-    stego_audio = AudioSteganography("../test/input.wav")
-    stego_audio.hide_binary_file("../test/bits.txt", "../test/output.wav")
-
-    # Exemple de récupération
-    stego_audio = AudioSteganography("../test/output.wav")
-    recovered_bits = stego_audio.retrieve_binary_file("../test/recovered.txt")
-    print("Bits récupérés:", recovered_bits)
+# if __name__ == "__main__":
+#     # Exemple de cache
+#     stego_audio = AudioSteganography("../test/input.wav")
+#     stego_audio.hide_binary_file("../test/bits.txt", "../test/output.wav")
+#
+#     # Exemple de récupération
+#     stego_audio = AudioSteganography("../test/output.wav")
+#     recovered_bits = stego_audio.retrieve_binary_file("../test/recovered.txt")
+#     print("Bits récupérés:", recovered_bits)
