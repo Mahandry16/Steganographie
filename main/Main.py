@@ -4,10 +4,10 @@ from treatement.ImageTreat import ImageSteganography
 
 if __name__ == "__main__":
     stego = ImageSteganography("../test/hide.png")
-    stego.hide_binary_file("../test/bits.txt", "../test/hideImage.png")
+    stego.hide_binary_file("../test/hideImage1.txt", "../test/hideImage.png")
 
     stego_audio = AudioSteganography("../test/input.wav")
-    stego_audio.hide_binary_file("../test/hidden.txt", "../test/output.wav")
+    stego_audio.hide_binary_file("../test/hideMessage2.txt", "../test/output.wav")
 
     stego = ImageSteganography("../test/hideImage.png")
     recovered_bits = stego.retrieve_binary_file("../test/recupered.txt")
